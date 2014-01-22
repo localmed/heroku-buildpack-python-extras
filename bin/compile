@@ -40,6 +40,7 @@ export BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 export ROOT_DIR=$(dirname $BIN_DIR)
 export BUILD_DIR="$1"
 export CACHE_DIR="$2"
+export ENV_DIR="$3"
 
 # Syntax sugar.
 source "$BIN_DIR/utils"
@@ -123,7 +124,10 @@ fi
 
 # Run collectstatic if this is a Django app.
 if [ -f manage.py ] && [ ! "$DISABLE_COLLECTSTATIC" ]; then
-    source "$BIN_DIR/steps/collectstatic"
+    (
+        export_env_dir
+        source "$BIN_DIR/steps/collectstatic"
+    )
 fi
 
 # ### Finalize
