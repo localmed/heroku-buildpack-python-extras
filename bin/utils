@@ -122,3 +122,26 @@ function download_package() {
     mkdir -p $location
     curl $package -s -o - | tar xzf - -C $location
 }
+
+# Export environment variables from the $ENV_DIR.
+# https://devcenter.heroku.com/articles/buildpack-api-staging?preview=1#summary
+#
+# Usage:
+#
+#     (
+#         export_env_dir
+#         echo $SOME_ENV_VAR
+#     )
+function export_env_dir() {
+    local env_dir=${1:-$ENV_DIR}
+    local whitelist_regex=${2:-''}
+    local blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
+
+    if [ -d "$env_dir" ]; then
+        for e in $(ls $env_dir); do
+            echo "$e" | grep -E "$whitelist_regex" | grep -qvE "$blacklist_regex" &&
+            export "$e=$(cat $env_dir/$e)"
+            :
+        done
+    fi
+}
