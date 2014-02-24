@@ -13,13 +13,17 @@ export CPPPATH="$NODE_INCLUDE_PATH"
 # Let's get started...
 puts_step "Installing node packages using node version $NODE_VERSION"
 
-# Install Node
-echo "Installing node..." | indent
-download_package "http://s3pository.heroku.com/node/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" "$BUILD_DIR"
+if [ ! "$FRESH_NODE" ] && [ -d "$NODE_DIR" ]; then
+    echo "Using node ($NODE_VERSION)" | indent
+else
+    # Install Node
+    echo "Installing node..." | indent
+    download_package "http://s3pository.heroku.com/node/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" "$BUILD_DIR"
 
-# Move node (and npm) into ./vendor and make them executable
-mv "$BUILD_DIR/node-v$NODE_VERSION-linux-x64" "$NODE_DIR"
-chmod +x $NODE_DIR/bin/*
+    # Move node (and npm) into ./vendor and make them executable
+    mv "$BUILD_DIR/node-v$NODE_VERSION-linux-x64" "$NODE_DIR"
+    chmod +x $NODE_DIR/bin/*
+fi
 
 # Install dependencies with npm
 npm install --production 2>&1 | indent
