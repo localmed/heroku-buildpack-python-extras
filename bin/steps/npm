@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 NODE_DIR="$HEROKU_DIR/node"
-NODE_VERSION=${NODE_VERSION:-"0.4.7"}
-NPM_VERSION=${NPM_VERSION:-"1.0.106"}
+NODE_VERSION=${NODE_VERSION:-"0.10.26"}
 NODE_INCLUDE_PATH="$(build_path $NODE_DIR)/include"
 NPM_BIN_DIR="node_modules/.bin"
 NODE_PROFILE_PATH="$PROFILE_DIR/node.sh"
@@ -12,16 +11,18 @@ export CPATH="$NODE_INCLUDE_PATH"
 export CPPPATH="$NODE_INCLUDE_PATH"
 
 # Let's get started...
-puts_step "Installing node packages using npm version $NPM_VERSION"
+puts_step "Installing node packages using node version $NODE_VERSION"
 
-# Install Node and NPM
+# Install Node
 echo "Installing node..." | indent
-download_s3_package heroku-buildpack-nodejs nodejs "$NODE_VERSION" "$NODE_DIR"
-echo "Installing npm..." | indent
-download_s3_package heroku-buildpack-nodejs npm "$NPM_VERSION" "$NODE_DIR"
+download_package "http://s3pository.heroku.com/node/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" "$BUILD_DIR"
+
+# Move node (and npm) into ./vendor and make them executable
+mv "$BUILD_DIR/node-v$NODE_VERSION-linux-x64" "$NODE_DIR"
+chmod +x $NODE_DIR/bin/*
 
 # Install dependencies with npm
-HOME="$BUILD_DIR" node $(build_path $NODE_DIR)/cli.js install --production 2>&1 | indent
+npm install --production 2>&1 | indent
 
 # Setup runtime env
 mkdir -p $(dirname $NODE_PROFILE_PATH)
