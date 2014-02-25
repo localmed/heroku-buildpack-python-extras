@@ -12,7 +12,7 @@ if [ -f "$GEOS_LIB_PATH" ]; then
     puts_step "Using GEOS ($GEOS_VERSION)"
 else
     puts_step "Installing GEOS ($GEOS_VERSION)"
-    download_s3_package heroku-geodjango-libs geos "$GEOS_VERSION" "$GEOS_DIR"
+    download_s3_package heroku-buildpack-python-extras geos "$GEOS_VERSION" "$GEOS_DIR"
 fi
 
 # Setup runtime env

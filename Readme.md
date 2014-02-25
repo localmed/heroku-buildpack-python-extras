@@ -77,19 +77,19 @@ Runtime options include:
 Configuration
 -------------
 
-*Note: not all versions of libraries are supported. TODO: Add complete list of available versions.*
+*Note: not all versions of libraries are supported.**
 
 | Variable           | Type    | Default      | Description |
 | ------------------ | ------- | ------------ | ----------- |
 | CLEAR_CACHE        | Boolean | 0            | Clear the cache before compilation. Installs dependencies from scratch |
 | FRESH_PYTHON       | Boolean | 0            | Reinstall python |
-| PYTHON_VERSION     | String  | python-2.7.6 | Version of Python to install. **Needs updating** |
-| PIP_VERSION        | String  | 1.3.1        | Version of pip to install. **Needs updating** |
+| PYTHON_VERSION     | String  | python-2.7.6 | Version of Python to install. Using `runtime.txt` is preferred. |
+| PIP_VERSION        | String  | 1.3.1        | Version of pip to install.<br>Options: 1.3.1 |
 | SKIP_PYLIBMC       | Boolean | 0            | Do not install libmemcached (for pylibmc) |
 | SKIP_GEOS          | Boolean | 0            | Do not install GEOS (for GeoDjango) |
-| GEOS_VERSION       | String  | 3.3.5        | Version of GEOS to install |
+| GEOS_VERSION       | String  | 3.3.5        | Version of GEOS to install<br>Options: 3.3.5 |
 | SKIP_BUNDLER       | Boolean | 0            | Do not install Ruby dependencies using bundler |
-| BUNDLER_VERSION    | String  | 1.5.2        | Version of bundler to install.<br>Options: 1.2.2, 1.3.5, 1.5.2 |
+| BUNDLER_VERSION    | String  | 1.5.2        | Version of bundler to install.<br>Options: 1.5.2, 1.3.5, 1.2.2 |
 | SKIP_NPM           | Boolean | 0            | Do not install Node dependencies using npm |
-| NODE_VERSION       | String  | 0.10.26      | Version of Node to install. |
+| NODE_VERSION       | String  | 0.10.26      | Version of Node to install.<br>Options: 0.11.9, 0.10.26, 0.9.12 |
 | SKIP_COLLECTSTATIC | Boolean | 0            | Do not run `collectstatic` |
