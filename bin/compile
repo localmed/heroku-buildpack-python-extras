@@ -45,6 +45,9 @@ export ENV_DIR="$3"
 # Syntax sugar.
 source "$BIN_DIR/utils"
 
+# Export the ENV variables before starting
+export_env_dir
+
 # Directory Hacks for path consistiency.
 APP_DIR=${APP_DIR:-$HOME}
 TMP_APP_DIR="$CACHE_DIR/tmp_app_dir"
@@ -124,10 +127,7 @@ fi
 
 # Run collectstatic if this is a Django app.
 if [ -f manage.py ] && [ ! "$DISABLE_COLLECTSTATIC" ]; then
-    (
-        export_env_dir
-        source "$BIN_DIR/steps/collectstatic"
-    )
+    source "$BIN_DIR/steps/collectstatic"
 fi
 
 # ### Finalize

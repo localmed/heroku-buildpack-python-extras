@@ -135,7 +135,7 @@ function download_package() {
 function export_env_dir() {
     local env_dir=${1:-$ENV_DIR}
     local whitelist_regex=${2:-''}
-    local blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
+    local blacklist_regex=${3:-'^(APP_DIR|BUILD_DIR|CACHE_DIR|PROFILE_DIR|PROFILE_PATH|HEROKU_DIR|HEROKU_VENDOR_DIR|HEROKU_LIB_DIR|HOME|PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
 
     if [ -d "$env_dir" ]; then
         for e in $(ls $env_dir); do
