@@ -89,7 +89,7 @@ Configuration
 | SKIP_GEOS          | Boolean | 0            | Do not install GEOS (for GeoDjango) |
 | GEOS_VERSION       | String  | 3.3.5        | Version of GEOS to install |
 | SKIP_BUNDLER       | Boolean | 0            | Do not install Ruby dependencies using bundler |
-| BUNDLER_VERSION    | String  | 1.2.1        | Version of bundler to install. **Needs updating** |
+| BUNDLER_VERSION    | String  | 1.5.2        | Version of bundler to install.<br>Options: 1.2.2, 1.3.5, 1.5.2 |
 | SKIP_NPM           | Boolean | 0            | Do not install Node dependencies using npm |
 | NODE_VERSION       | String  | 0.10.26      | Version of Node to install. |
 | SKIP_COLLECTSTATIC | Boolean | 0            | Do not run `collectstatic` |
