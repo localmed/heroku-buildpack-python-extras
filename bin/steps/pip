@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-PIP_SRC_DIR="$HEROKU_DIR/python/src"
-PIP_VERSION=${PIP_VERSION:-"1.3.1"}
-DISTRIBUTE_VERSION=${DISTRIBUTE_VERSION:-"0.6.36"}
+PYTHON_SRC_DIR="$HEROKU_DIR/python/src"
+PIP_VERSION=${PIP_VERSION:-"1.5.4"}
+PIP_SRC_DIR="$HEROKU_DIR/src/pip"
+SETUPTOOLS_VERSION=${SETUPTOOLS_VERSION:-"2.2"}
+SETUPTOOLS_SRC_DIR="$HEROKU_DIR/src/setuptools"
 
 # If Pip isn't up to date:
 if [ "$FRESH_PYTHON" ] || [[ ! $(pip --version) == *$PIP_VERSION* ]]; then
@@ -10,14 +12,18 @@ if [ "$FRESH_PYTHON" ] || [[ ! $(pip --version) == *$PIP_VERSION* ]]; then
     WORKING_DIR=$(pwd)
 
     # Prepare it for the real world
-    puts_step "Installing Distribute ($DISTRIBUTE_VERSION)"
-    cd "$ROOT_DIR/vendor/distribute-$DISTRIBUTE_VERSION/"
+    puts_step "Installing setuptools ($SETUPTOOLS_VERSION)"
+    download_s3_package heroku-buildpack-python-extras setuptools "$SETUPTOOLS_VERSION" "$SETUPTOOLS_SRC_DIR"
+    cd "$SETUPTOOLS_SRC_DIR"
     python setup.py install &> /dev/null
+    rm -rf "$SETUPTOOLS_SRC_DIR"
     cd "$WORKING_DIR"
 
-    puts_step "Installing Pip ($PIP_VERSION)"
-    cd "$ROOT_DIR/vendor/pip-$PIP_VERSION/"
+    puts_step "Installing pip ($PIP_VERSION)"
+    download_s3_package heroku-buildpack-python-extras pip "$PIP_VERSION" "$PIP_SRC_DIR"
+    cd "$PIP_SRC_DIR"
     python setup.py install &> /dev/null
+    rm -rf "$PIP_SRC_DIR"
     cd "$WORKING_DIR"
     set -e
     hash -r
@@ -36,4 +42,4 @@ fi
 
 # Install dependencies with Pip.
 puts_step "Installing dependencies using Pip ($PIP_VERSION)"
-pip install --use-mirrors -r requirements.txt --exists-action=w --src="$PIP_SRC_DIR" | cleanup_pip | indent
+pip install --use-mirrors -r requirements.txt --exists-action=w --src="$PYTHON_SRC_DIR" | cleanup_pip | indent

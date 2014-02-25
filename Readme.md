@@ -84,7 +84,8 @@ Configuration
 | CLEAR_CACHE        | Boolean | 0            | Clear the cache before compilation. Installs dependencies from scratch |
 | FRESH_PYTHON       | Boolean | 0            | Reinstall python |
 | PYTHON_VERSION     | String  | python-2.7.6 | Version of Python to install. Using `runtime.txt` is preferred. |
-| PIP_VERSION        | String  | 1.3.1        | Version of pip to install.<br>Options: 1.3.1 |
+| SETUPTOOLS_VERSION | String  | 2.2          | Version of setuptools to install.<br>Options: 2.2 |
+| PIP_VERSION        | String  | 1.5.4        | Version of pip to install.<br>Options: 1.5.4 |
 | SKIP_PYLIBMC       | Boolean | 0            | Do not install libmemcached (for pylibmc) |
 | SKIP_GEOS          | Boolean | 0            | Do not install GEOS (for GeoDjango) |
 | GEOS_VERSION       | String  | 3.3.5        | Version of GEOS to install<br>Options: 3.3.5 |
