@@ -41,5 +41,5 @@ if (grep -Fiq "hg+" requirements.txt) then
 fi
 
 # Install dependencies with Pip.
-puts_step "Installing dependencies using Pip ($PIP_VERSION)"
-pip install --use-mirrors -r requirements.txt --exists-action=w --src="$PYTHON_SRC_DIR" | cleanup_pip | indent
+puts_step "Installing dependencies using pip ($PIP_VERSION)"
+pip install -r requirements.txt --exists-action=w --src="$PYTHON_SRC_DIR" | cleanup_pip | indent
