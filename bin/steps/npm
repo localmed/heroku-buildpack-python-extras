@@ -25,6 +25,9 @@ else
     chmod +x $NODE_DIR/bin/*
 fi
 
+# See: http://blog.npmjs.org/post/78085451721/npms-self-signed-certificate-is-no-more
+npm config set ca ""
+
 # Install dependencies with npm
 npm install --production 2>&1 | indent
 
