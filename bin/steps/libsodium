@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+# This script serves as the libsodium build step of the
+# [**Python Buildpack**](https://github.com/heroku/heroku-buildpack-python)
+# compiler.
+#
+# A [buildpack](http://devcenter.heroku.com/articles/buildpacks) is an
+# adapter between a Python application and Heroku's runtime.
+#
+# This script is invoked by [`bin/compile`](/).
+
+VERSION=1.0.0
+export SODIUM_DIR=libsodium-$VERSION
+TARBALL=$SODIUM_DIR.tar.gz
+TARBALL_URL=https://github.com/jedisct1/libsodium/releases/download/$VERSION/$TARBALL
+
+if [ ! -d $CACHE_DIR/$SODIUM_DIR ];
+then
+  cd $CACHE_DIR
+
+  echo -n "-----> Fetching libsodium... "
+  curl --silent --remote-name --insecure --location $TARBALL_URL
+  tar -xf $TARBALL
+  rm $TARBALL
+  echo "done"
+
+  echo -n "-----> Configuring libsodium... "
+  cd $SODIUM_DIR
+  ./configure --silent --disable-debug --disable-dependency-tracking
+  echo "done"
+
+  echo -n "-----> Compiling libsodium... "
+  make &> /dev/null
+  echo "done"
+fi
+
+echo -n "-----> Copying libsodium ($VERSION)... "
+mkdir -p $BUILD_DIR/vendor
+cp -r $CACHE_DIR/$SODIUM_DIR $BUILD_DIR/vendor/$SODIUM_DIR
+export LD_LIBRARY_PATH=$BUILD_DIR/vendor/$SODIUM_DIR/src/libsodium/.libs
+echo "done"
+
+cd $BUILD_DIR
