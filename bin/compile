@@ -148,7 +148,7 @@ done
 puts_step "Setting up ENV"
 mkdir -p $(dirname $PROFILE_PATH)
 set_env_default LIBRARY_PATH "$(app_path $HEROKU_LIB_DIR)"
-set_env_default LD_LIBRARY_PATH "$(app_path $HEROKU_LIB_DIR)"
+set_env_default LD_LIBRARY_PATH "$(app_path vendor/$SODIUM_DIR/src/libsodium/.libs):$(app_path $HEROKU_LIB_DIR)"
 set_env_default LANG "$LANG"
 
 # Experimental post_compile hook.
