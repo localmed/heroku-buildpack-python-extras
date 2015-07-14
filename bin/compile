@@ -45,6 +45,9 @@ export ENV_DIR="$3"
 # Syntax sugar.
 source "$BIN_DIR/utils"
 
+# Add pip-pop to path
+export PATH="$PATH:$ROOT_DIR/vendor/pip-pop"
+
 # Export the ENV variables before starting
 export_env_dir
 
@@ -109,6 +112,11 @@ fi
 # Install GEOS for GeoDjango
 if [ ! "$SKIP_GEOS" ]; then
     source "$BIN_DIR/steps/geos"
+fi
+
+# Install libffi
+if [ ! "$SKIP_CRYPTOGRAPHY" ]; then
+    source "$BIN_DIR/steps/cryptography"
 fi
 
 # Install Pip dependencies
